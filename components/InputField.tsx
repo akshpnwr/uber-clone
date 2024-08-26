@@ -1,5 +1,4 @@
 import { InputFieldProps } from '@/types/type';
-import { Fontisto } from '@expo/vector-icons';
 import React from 'react';
 import {
   Image,
@@ -28,16 +27,16 @@ const InputField = ({
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="my-1 w-full">
-          <Text className={`text-base font-JakartaSemiBold mb-3 ${labelStyle}`}>
+          <Text className={`mb-3 font-JakartaSemiBold text-base ${labelStyle}`}>
             {label}
           </Text>
-          <View className="flex flex-row items-center justify-start rounded-full bg-neutral-100 border border-neutral-100 focus:border-primary-500">
+          <View className="flex flex-row items-center justify-start rounded-full border border-neutral-100 bg-neutral-100 focus:border-primary-500">
             {icon && (
-              <Image source={icon} className={`w-4 h-4 ml-4 ${iconStyle}`} />
+              <Image source={icon} className={`ml-4 h-4 w-4 ${iconStyle}`} />
             )}
             <TextInput
               placeholder={placeholder}
-              className={`rounded-full p-2 font-JakartaSemiBold text-[12.5px] flex-1 text-left ${className}`}
+              className={`flex-1 rounded-full p-2 text-left font-JakartaSemiBold text-[12.5px] ${className}`}
               secureTextEntry={secureTextEntry}
               {...props}
             />
