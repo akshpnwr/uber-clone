@@ -2,6 +2,7 @@ import CustomButton from '@/components/CustomButton';
 import InputField from '@/components/InputField';
 import OAuth from '@/components/OAuth';
 import { icons, images } from '@/constants';
+import { fetchAPI } from '@/lib/fetch';
 import { useSignUp } from '@clerk/clerk-expo';
 import { Link, router } from 'expo-router';
 import React, { useState } from 'react';
@@ -19,7 +20,7 @@ const SignUp = () => {
 
   const onSingUpPress = async () => {
     console.log('form', form);
-    const { email, name, password } = form;
+    const { email, password } = form;
 
     if (!isLoaded) return;
 
@@ -50,6 +51,15 @@ const SignUp = () => {
         code: verification.code,
       });
       if (completeSignUp.status === 'complete') {
+        await fetchAPI('/(api)/user', {
+          method: 'POST',
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: completeSignUp.createdUserId,
+          }),
+        });
+
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification({ ...verification, state: 'success' });
       } else {
@@ -120,7 +130,7 @@ const SignUp = () => {
         <ReactNativeModal isVisible={verification.state === 'pending'}>
           <View className="min-h-[300px] rounded-2xl bg-white px-7 py-9">
             <Text className="font-JakartaBold text-3xl">Verified</Text>
-            <Text className="font-Jakarta text-base text-gray-400">
+            <Text className="font-JakartaMedium text-base text-gray-400">
               We've sent a verification code to {form.email}
             </Text>
 
@@ -155,12 +165,12 @@ const SignUp = () => {
             <Text className="text-center font-JakartaBold text-3xl">
               Verified
             </Text>
-            <Text className="text-center font-Jakarta text-base text-gray-400">
+            <Text className="text-center font-JakartaMedium text-base text-gray-400">
               You have successfully verified yourself.
             </Text>
             <CustomButton
               title="Browse home"
-              onPress={() => router.push('/(root)/(tabs)/home')}
+              onPress={() => router.replace('/(root)/(tabs)/home')}
               className="mt-5"
             />
           </View>
