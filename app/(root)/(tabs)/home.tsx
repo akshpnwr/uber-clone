@@ -1,8 +1,9 @@
 import GoogleTextInput from '@/components/GoogleTextInput';
+import Map from '@/components/Map';
 import RideCard from '@/components/RideCard';
 import { icons, images } from '@/constants';
 import { useUser } from '@clerk/clerk-expo';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -12,6 +13,9 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import * as Location from 'expo-location';
+import { useLocationStore } from '@/store';
 
 const recentRides = [
   {
@@ -123,13 +127,41 @@ const recentRides = [
 const Home = () => {
   const { user } = useUser();
   const loading = true;
+  const [hasPermissions, setHasPermissions] = useState(false);
+  const { setUserLocation } = useLocationStore();
 
   const handleSignOut = () => {
     console.log('logout');
   };
   const handleDestinationPress = () => {};
 
-  console.log(user?.username);
+  useEffect(() => {
+    const requestLocation = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== 'granted') {
+        setHasPermissions(false);
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync();
+
+      const address = await Location.reverseGeocodeAsync({
+        latitude: location.coords?.latitude!,
+        longitude: location.coords?.longitude!,
+      });
+
+      setUserLocation({
+        // latitude: location.coords.latitude,
+        // longitude: location.coords.longitude,
+        latitude: 37.78825,
+        longitude: -122.4324,
+        address: `${address[0].name!}, ${address[0].region}`,
+      });
+    };
+
+    requestLocation();
+  }, [setUserLocation]);
 
   return (
     <SafeAreaView className="bg-general-500">
@@ -176,6 +208,15 @@ const Home = () => {
               icon={icons.search}
               handlePress={handleDestinationPress}
             />
+            <>
+              <Text className="mb-3 font-JakartaBold text-2xl">
+                Your current location
+              </Text>
+              <View className="h-[300px]">
+                <Map />
+              </View>
+            </>
+            <Text className="my-3 font-JakartaBold text-2xl">Recent rides</Text>
           </>
         )}
       />
