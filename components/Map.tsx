@@ -96,23 +96,20 @@ const Map = () => {
       showsUserLocation={true}
       initialRegion={initialRegion}
     >
-      {markers.map((marker) => {
-        console.log(marker);
-        return (
-          <Marker
-            key={marker.id}
-            coordinate={{
-              latitude: marker.latitude,
-              longitude: marker.longitude,
-            }}
-            title={marker.title}
-            onPress={() => setSelectedDriver(marker.id)}
-            image={
-              selectedDriver === marker.id ? icons.selectedMarker : icons.marker
-            }
-          />
-        );
-      })}
+      {markers.map((marker) => (
+        <Marker
+          key={marker.id}
+          coordinate={{
+            latitude: marker.latitude,
+            longitude: marker.longitude,
+          }}
+          title={marker.title}
+          onPress={() => setSelectedDriver(marker.id)}
+          image={
+            selectedDriver === marker.id ? icons.selectedMarker : icons.marker
+          }
+        />
+      ))}
     </MapView>
   );
 };

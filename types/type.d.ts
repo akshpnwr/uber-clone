@@ -43,7 +43,7 @@ declare interface Ride {
   ride_time: number;
   fare_price: number;
   payment_status: string;
-  driver_id: number;
+  driver_id: string;
   user_email: string;
   created_at: string;
   driver: {
@@ -93,7 +93,7 @@ declare interface PaymentProps {
   fullName: string;
   email: string;
   amount: string;
-  driverId: number;
+  driverId: string;
   rideTime: number;
 }
 
