@@ -12,7 +12,9 @@ const GoogleTextInput = ({
   handlePress,
 }: GoogleInputProps) => {
   return (
-    <View className={`z-50 mb-4 rounded-xl bg-white px-2 ${containerStyle}`}>
+    <View
+      className={`relative z-50 mb-4 flex flex-row items-center justify-center rounded-xl ${containerStyle}`}
+    >
       <GooglePlacesAutocomplete
         placeholder="Where do you want to go?"
         fetchDetails={true}
@@ -21,23 +23,30 @@ const GoogleTextInput = ({
           textInputContainer: {
             alignItems: 'center',
             justifyContent: 'center',
-            marginHorizontal: 5,
+            borderRadius: 20,
+            marginHorizontal: 20,
             position: 'relative',
             shadowColor: '#d4d4d4',
           },
           textInput: {
-            backgroundColor: textInputBackgroundColor || 'white',
+            backgroundColor: textInputBackgroundColor
+              ? textInputBackgroundColor
+              : 'white',
             fontSize: 16,
             fontWeight: '600',
             marginTop: 5,
             width: '100%',
           },
           listView: {
-            backgroundColor: textInputBackgroundColor || 'white',
+            backgroundColor: textInputBackgroundColor
+              ? textInputBackgroundColor
+              : 'white',
             position: 'relative',
             top: 0,
             width: '100%',
-            zIndex: 99,
+            borderRadius: 10,
+            shadowColor: '#d4d4d4',
+            zIndex: 9999999,
           },
         }}
         onPress={(data, details = null) => {

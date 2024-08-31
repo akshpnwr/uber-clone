@@ -1,8 +1,8 @@
 import BottomSheet, {
+  BottomSheetFlatList,
   BottomSheetScrollView,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-
 import { router } from 'expo-router';
 import React, { useRef } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
@@ -23,10 +23,10 @@ const RideLayout = ({
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   return (
-    <GestureHandlerRootView className="">
-      <View className="bg-white">
+    <GestureHandlerRootView className="flex-1">
+      <View className="flex-1 bg-white">
         <View className="flex h-screen flex-col bg-blue-500">
-          <View className="absolute top-5 z-10 flex flex-row items-center justify-start px-5">
+          <View className="absolute top-16 z-10 flex flex-row items-center justify-start px-5">
             <TouchableOpacity onPress={() => router.back()}>
               <View className="h-10 w-10 items-center justify-center rounded-full bg-white">
                 <Image
@@ -59,14 +59,14 @@ const RideLayout = ({
               {children}
             </BottomSheetView>
           ) : (
-            <BottomSheetScrollView
+            <BottomSheetView
               style={{
                 flex: 1,
                 padding: 20,
               }}
             >
               {children}
-            </BottomSheetScrollView>
+            </BottomSheetView>
           )}
         </BottomSheet>
       </View>
