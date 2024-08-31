@@ -60,7 +60,7 @@ const Map = () => {
     destinationLongitude,
   } = useLocationStore();
 
-  const { selectedDriver, setSelectedDriver } = useDriverStore();
+  const { selectedDriver, setSelectedDriver, setDrivers } = useDriverStore();
 
   const initialRegion = calculateRegion({
     userLatitude,
@@ -73,6 +73,7 @@ const Map = () => {
 
   useEffect(() => {
     if (drivers.length > 0) {
+      setDrivers(drivers);
       if (!userLatitude || !userLongitude) {
         return;
       }
